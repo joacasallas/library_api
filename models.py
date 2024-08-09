@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # Author: Joana Casallas
-"""This module provides a class User"""
+"""This module provides a class User and a class Book"""
 
 
 from flask_sqlalchemy import SQLAlchemy
@@ -20,8 +20,9 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
+
 class Book(db.Model):
-    """This class rerpesent a book instance"""
+    """This class represent a book instance"""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     author = db.Column(db.String(100), nullable=False)
