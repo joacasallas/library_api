@@ -34,8 +34,7 @@ Modules
     - Delete a book  
 
 ### Execution  
-$ ./app.py
-
+Running: `$ python3 app.py`
 
 Tests: `python3 -m unittest discover tests`
 
