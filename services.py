@@ -6,7 +6,21 @@
 from flask import request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
+from marshmallow import Schema, fields
 from models import db, User, Book
+
+
+class UserDTO(Schema):
+    """validate User values"""
+    id = fields.Int(dump_only=True)
+    username = fields.Str(required=True)
+
+
+class BookDTO(Schema):
+    """Validate Book values"""
+    id = fields.Int(dump_only=True)
+    title = fields.Str(requred=True)
+    author = fields.Str(required=True)
 
 
 def register_user(username, password):
@@ -26,7 +40,7 @@ def authenticate_user(username, password):
 
 
 def add_book(title, author):
-    """create new instance of book"""
+    """create a new instance of book"""
     new_book = Book(title=title, author=author)
     db.session.add(new_book)
     db.session.commit()
@@ -37,7 +51,7 @@ def get_all_books():
     return Book.query.all()
 
 
-def get_book_but_id(book_id):
+def get_book_by_id(book_id):
     """get book but ID"""
     return Book.query.get(book_id)
 
