@@ -4,24 +4,26 @@ import unittest
 from flask_jwt_extended import create_access_token
 from app import app, db
 
-
 class FlaskTestCase(unittest.TestCase):
     """tests app"""
-
 
     @classmethod
     def setUpClass(cls):
         """setup for each test"""
         app.config['TESTING'] = True
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
         cls.client = app.test_client()
 
     def setUp(self):
-        """setup for each test"""
-        db.create(all)
+        """Create all database tables"""
+        with app.app_context():
+            db.create_all()
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(cls):
         """tearDown for each test"""
-        db.drop_all()
+        with app.app_context():
+            db.drop_all()
 
     def test_register_user(self):
         """Test the register_user method"""
